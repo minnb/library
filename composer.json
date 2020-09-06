@@ -42,8 +42,7 @@
             "database/factories",
             "app/Models",
             "app/Utils",
-            "app/Dtos",
-            "app/FE"
+            "app/Dtos"
         ],
         "files": [
             "app/Utils/Functions.php"
