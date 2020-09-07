@@ -25,11 +25,11 @@ Route::group(['prefix'=> 'dashboard'], function(){
 
 			Route::group(['prefix'=> 'tac-gia'], function(){
 				Route::get('list', ['as'=>'get.dashboard.cate.book.author.list','uses'=>'Dashboard\BookController@author_list']);
-				Route::get('create', ['as'=>'get.dashboard.cate.book.author.create','uses'=>'Dashboard\BookController@create']);
-				Route::get('edit/{id}', ['as'=>'get.dashboard.cate.book.author.edit','uses'=>'Dashboard\BookController@edit'])->where('id', '[0-9]+');;
-				Route::get('delete/{id}', ['as'=>'get.dashboard.cate.book.author.delete','uses'=>'Dashboard\BookController@delete'])->where('id', '[0-9]+');
-				Route::post('create', ['as'=>'post.dashboard.cate.book.author.create','uses'=>'Dashboard\BookController@postCreate']);
-				Route::post('edit/{id}', ['as'=>'post.dashboard.cate.book.author.edit','uses'=>'Dashboard\BookController@postEdit'])->where('id', '[0-9]+');
+				Route::get('create', ['as'=>'get.dashboard.cate.book.author.create','uses'=>'Dashboard\BookController@author_create']);
+				Route::get('edit/{id}', ['as'=>'get.dashboard.cate.book.author.edit','uses'=>'Dashboard\BookController@author_edit'])->where('id', '[0-9]+');;
+				Route::get('delete/{id}', ['as'=>'get.dashboard.cate.book.author.delete','uses'=>'Dashboard\BookController@author_delete'])->where('id', '[0-9]+');
+				Route::post('create', ['as'=>'post.dashboard.cate.book.author.create','uses'=>'Dashboard\BookController@postCreateAuthor']);
+				Route::post('edit/{id}', ['as'=>'post.dashboard.cate.book.author.edit','uses'=>'Dashboard\BookController@postEditAuthor'])->where('id', '[0-9]+');
 			});
 
 			Route::group(['prefix'=> 'noi-xuat-ban'], function(){

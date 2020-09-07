@@ -15,7 +15,7 @@
             </a>
         </li>
         <li>
-            <a href="{{ route('get.dashboard.cate.book.nxb.create') }}">
+            <a href="{{ route('get.dashboard.cate.book.author.create') }}">
                 <i class="red ace-icon fa fa-pencil  bigger-120"></i>
                 Tạo mới 
             </a>
