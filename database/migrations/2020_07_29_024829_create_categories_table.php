@@ -18,7 +18,7 @@ class CreateCategoriesTable extends Migration
             $table->tinyInteger('type');
             $table->integer('parent');
             $table->string('name');
-            $table->string('alias');
+            $table->string('alias')->unique();
             $table->string('description', 500);
             $table->longText('content');
             $table->string('thumbnail');

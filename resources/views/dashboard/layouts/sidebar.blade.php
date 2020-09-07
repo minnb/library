@@ -14,6 +14,28 @@
     function getActiveCSS($name)
     {
         $route_name = \Str::upper(\Request::route()->getName());
+        if(\Str::upper($name) == $route_name || \Str::contains($route_name, \Str::upper($name))){
+            echo "active";
+        }
+        else
+        {
+            echo "";
+        }
+    }
+    function getActiveCSSByCode($code)
+    {
+        $route_name = url()->current();
+        if(Str::contains($route_name, $code)){
+            echo "active";
+        }
+        else
+        {
+            echo "";
+        }
+    }
+    function getActiveRoot($name)
+    {
+        $route_name = \Str::upper(\Request::route()->getName());
         if(\Str::upper($name) == $route_name){
             echo "active";
         }
@@ -59,7 +81,7 @@
     </div><!-- /.sidebar-shortcuts -->
 
     <ul class="nav nav-list">
-        <li class="{{ getActiveCSS('dashboard') }}">
+        <li class="{{ getActiveRoot('dashboard') }}">
             <a href="{{ url('dashboard') }}">
                 <i class="menu-icon fa fa-tachometer"></i>
                 <span class="menu-text"> Dashboard </span>
@@ -71,7 +93,7 @@
         <li class="{{ getRootCSS('dashboard.cate') }}">
             <a href="#" class="dropdown-toggle">
                 <i class="menu-icon fa fa-list"></i>
-                <span class="menu-text"> Categories </span>
+                <span class="menu-text"> Danh mục sách </span>
 
                 <b class="arrow fa fa-angle-down"></b>
             </a>
@@ -79,12 +101,54 @@
             <b class="arrow"></b>
 
             <ul class="submenu">
-                <li class="{{ getActiveCSS('get.dashboard.cate.list') }}">
-                    <a href="{{ route('get.dashboard.cate.list') }}">
+                <li class="{{ getActiveCSSByCode('danh-muc-sach') }}">
+                    <a href="{{ route('get.dashboard.cate.list', ['code'=>'danh-muc-sach']) }}">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Categories
+                        Thể loại sách
                     </a>
-                    {{ $url ?? '' }}
+                    <b class="arrow"></b>
+                </li>               
+                <li class="{{ getActiveCSS('get.dashboard.cate.book.nxb') }}">
+                    <a href="{{ route('get.dashboard.cate.book.nxb.list') }}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Nhà xuất bản
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                <li class="{{ getActiveCSS('get.dashboard.cate.book.author') }}">
+                    <a href="{{ route('get.dashboard.cate.book.author.list') }}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Tác giả
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                <li class="{{ getActiveCSS('get.dashboard.cate.book.make') }}">
+                    <a href="{{ route('get.dashboard.cate.book.make.list') }}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Nơi xuất bản
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+            </ul>
+        </li>
+
+        <li class="{{ getRootCSS('dashboard.product') }}">
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-pencil"></i>
+                <span class="menu-text"> Quản lý Sách </span>
+
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+
+            <b class="arrow"></b>
+
+            <ul class="submenu">
+                <li class="{{ getActiveCSS('get.dashboard.product.list') }}">
+                    <a href="{{ route('get.dashboard.product.list') }}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Quản lý Sách
+                    </a>
+
                     <b class="arrow"></b>
                 </li>
 
@@ -94,7 +158,7 @@
         <li class="{{ getRootCSS('dashboard.post') }}">
             <a href="#" class="dropdown-toggle">
                 <i class="menu-icon fa fa-pencil-square-o"></i>
-                <span class="menu-text"> Posts </span>
+                <span class="menu-text"> Bài viết </span>
 
                 <b class="arrow fa fa-angle-down"></b>
             </a>
@@ -105,7 +169,7 @@
                 <li class="{{ getActiveCSS('get.dashboard.post.list') }}">
                     <a href="{{ route('get.dashboard.post.list') }}">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Lists
+                        Danh sách
                     </a>
 
                     <b class="arrow"></b>
@@ -121,10 +185,10 @@
             </ul>
         </li>
 
-        <li class="{{ getRootCSS('dashboard.product') }}">
+        <li class="{{ getRootCSS('dashboard.post') }}">
             <a href="#" class="dropdown-toggle">
-                <i class="menu-icon fa fa-pencil"></i>
-                <span class="menu-text"> Products </span>
+                <i class="menu-icon fa fa-tachometer"></i>
+                <span class="menu-text"> Báo cáo </span>
 
                 <b class="arrow fa fa-angle-down"></b>
             </a>
@@ -132,41 +196,18 @@
             <b class="arrow"></b>
 
             <ul class="submenu">
-                <li class="{{ getActiveCSS('get.dashboard.product.list') }}">
-                    <a href="{{ route('get.dashboard.product.list') }}">
+                <li class="{{ getActiveCSS('get.dashboard.post.list') }}">
+                    <a href="{{ route('get.dashboard.post.list') }}">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        Lists
+                        Theo thể loại sách
                     </a>
 
                     <b class="arrow"></b>
                 </li>
 
-                <li class="{{ getActiveCSS('get.dashboard.product.price.list') }}">
-                    <a href="{{ route('get.dashboard.product.price.list') }}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Sales Price
-                    </a>
-
-                    <b class="arrow"></b>
-                </li>
-                <li class="{{ getActiveCSS('get.dashboard.product.prdatt.list') }}">
-                    <a href="{{ route('get.dashboard.product.prdatt.list') }}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Product Attributes
-                    </a>
-
-                    <b class="arrow"></b>
-                </li>
-                <li class="{{ getActiveCSS('get.dashboard.product.att.list') }}">
-                    <a href="{{ route('get.dashboard.product.att.list') }}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        Attributes
-                    </a>
-
-                    <b class="arrow"></b>
-                </li>
             </ul>
         </li>
+
         <li class="{{ getRootCSS('dashboard.user') }}">
             <a href="#" class="dropdown-toggle">
                 <i class="menu-icon fa fa-user"></i>

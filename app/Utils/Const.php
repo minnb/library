@@ -1,5 +1,17 @@
 <?php
 
+function getDanhMuc($code)
+{
+	switch ($code) 
+	{
+	  case 'blog':
+	    return "Danh mục bài viết";
+	    break;
+	  case 'danh-muc-sach':
+	    return "Danh mục sách";
+	}
+}
+
 function getArrDisplay(){
     $arr = [
       'Category' => 'Category',

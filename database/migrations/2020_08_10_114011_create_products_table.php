@@ -15,15 +15,23 @@ class CreateProductsTable extends Migration
     {
         Schema::create('m_products', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->string('sku',20);
-            $table->string('categories',100);
-            $table->string('name');
+            $table->integer('ma_the_loai');
+            $table->string('ma_sach',20);
+            $table->string('ten_sach');
             $table->string('alias');
-            $table->string('thumbnail');
-            $table->text('description');
-            $table->longText('content');
-            $table->string('base_unit',20);
-            $table->string('tax',20);
+            $table->string('hinh_anh',150);
+            $table->string('mon_loai',30);
+            $table->integer('ma_tac_gia');
+            $table->integer('nha_xuat_ban');
+            $table->integer('noi_xuat_ban');
+            $table->date('nam_xuat_ban');
+            $table->string('thong_tin_xuat_ban');
+            $table->integer('so_trang_sach');
+            $table->integer('don_gia');
+            $table->integer('kich_thuoc_rong');
+            $table->integer('kich_thuoc_cao');
+            $table->text('gioi_thieu_sach');
+            $table->longText('noi_dung_sach');
             $table->json('options');          
             $table->boolean('blocked')->default(0);
             $table->integer('user_id');

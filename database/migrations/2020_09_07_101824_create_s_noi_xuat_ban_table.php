@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductsAttibuteTable extends Migration
+class CreateSNoiXuatBanTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateProductsAttibuteTable extends Migration
      */
     public function up()
     {
-        Schema::create('m_attributes', function (Blueprint $table) {
-            $table->integer('id')->autoIncrement();
-            $table->integer('parent');
-            $table->string('code',20);
-            $table->string('values');
-            $table->string('description');
+        Schema::create('s_noi_xuat_ban', function (Blueprint $table) {
+            $table->id()->autoIncrement();
+            $table->string('noi_xuat_ban');
+            $table->string('alias')->unique();
+            $table->json('options');          
             $table->boolean('blocked')->default(0);
             $table->integer('user_id');
             $table->timestamps(0);
@@ -32,6 +31,6 @@ class CreateProductsAttibuteTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('m_attribute');
+        Schema::dropIfExists('s_noi_xuat_ban');
     }
 }

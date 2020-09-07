@@ -6,13 +6,43 @@ Route::group(['prefix'=> 'dashboard'], function(){
 	});
 
 	Route::group(['prefix'=> 'cate'], function(){
-		Route::get('list', ['as'=>'get.dashboard.cate.list','uses'=>'Dashboard\CateController@list']);
-		Route::get('create', ['as'=>'get.dashboard.cate.create','uses'=>'Dashboard\CateController@create']);
-		Route::get('edit/{id}', ['as'=>'get.dashboard.cate.edit','uses'=>'Dashboard\CateController@edit'])->where('id', '[0-9]+');;
-		Route::get('delete/{id}', ['as'=>'get.dashboard.cate.delete','uses'=>'Dashboard\CateController@delete'])->where('id', '[0-9]+');
-		Route::post('create', ['as'=>'post.dashboard.cate.create','uses'=>'Dashboard\CateController@postCreate']);
-		Route::post('edit/{id}', ['as'=>'post.dashboard.cate.edit','uses'=>'Dashboard\CateController@postEdit'])->where('id', '[0-9]+');
+		Route::get('{code}/list', ['as'=>'get.dashboard.cate.list','uses'=>'Dashboard\CateController@list']);
+		Route::get('{code}/create', ['as'=>'get.dashboard.cate.create','uses'=>'Dashboard\CateController@create']);
+		Route::get('{code}/edit/{id}', ['as'=>'get.dashboard.cate.edit','uses'=>'Dashboard\CateController@edit'])->where('id', '[0-9]+');;
+		Route::get('{code}/delete/{id}', ['as'=>'get.dashboard.cate.delete','uses'=>'Dashboard\CateController@delete'])->where('id', '[0-9]+');
+		Route::post('{code}/create', ['as'=>'post.dashboard.cate.create','uses'=>'Dashboard\CateController@postCreate']);
+		Route::post('{code}/edit/{id}', ['as'=>'post.dashboard.cate.edit','uses'=>'Dashboard\CateController@postEdit'])->where('id', '[0-9]+');
+
+		Route::group(['prefix'=> 'book'], function(){
+			Route::group(['prefix'=> 'nha-xuat-ban'], function(){
+				Route::get('list', ['as'=>'get.dashboard.cate.book.nxb.list','uses'=>'Dashboard\BookController@nxb_list']);
+				Route::get('create', ['as'=>'get.dashboard.cate.book.nxb.create','uses'=>'Dashboard\BookController@create']);
+				Route::get('edit/{id}', ['as'=>'get.dashboard.cate.book.nxb.edit','uses'=>'Dashboard\BookController@edit'])->where('id', '[0-9]+');;
+				Route::get('delete/{id}', ['as'=>'get.dashboard.cate.book.nxb.delete','uses'=>'Dashboard\BookController@delete'])->where('id', '[0-9]+');
+				Route::post('create', ['as'=>'post.dashboard.cate.book.nxb.create','uses'=>'Dashboard\BookController@postCreate']);
+				Route::post('edit/{id}', ['as'=>'post.dashboard.cate.book.nxb.edit','uses'=>'Dashboard\BookController@postEdit'])->where('id', '[0-9]+');
+			});
+
+			Route::group(['prefix'=> 'tac-gia'], function(){
+				Route::get('list', ['as'=>'get.dashboard.cate.book.author.list','uses'=>'Dashboard\BookController@author_list']);
+				Route::get('create', ['as'=>'get.dashboard.cate.book.author.create','uses'=>'Dashboard\BookController@create']);
+				Route::get('edit/{id}', ['as'=>'get.dashboard.cate.book.author.edit','uses'=>'Dashboard\BookController@edit'])->where('id', '[0-9]+');;
+				Route::get('delete/{id}', ['as'=>'get.dashboard.cate.book.author.delete','uses'=>'Dashboard\BookController@delete'])->where('id', '[0-9]+');
+				Route::post('create', ['as'=>'post.dashboard.cate.book.author.create','uses'=>'Dashboard\BookController@postCreate']);
+				Route::post('edit/{id}', ['as'=>'post.dashboard.cate.book.author.edit','uses'=>'Dashboard\BookController@postEdit'])->where('id', '[0-9]+');
+			});
+
+			Route::group(['prefix'=> 'noi-xuat-ban'], function(){
+				Route::get('list', ['as'=>'get.dashboard.cate.book.make.list','uses'=>'Dashboard\BookController@make_list']);
+				Route::get('create', ['as'=>'get.dashboard.cate.book.make.create','uses'=>'Dashboard\BookController@create']);
+				Route::get('edit/{id}', ['as'=>'get.dashboard.cate.book.make.edit','uses'=>'Dashboard\BookController@edit'])->where('id', '[0-9]+');;
+				Route::get('delete/{id}', ['as'=>'get.dashboard.cate.book.make.delete','uses'=>'Dashboard\BookController@delete'])->where('id', '[0-9]+');
+				Route::post('create', ['as'=>'post.dashboard.cate.book.make.create','uses'=>'Dashboard\BookController@postCreate']);
+				Route::post('edit/{id}', ['as'=>'post.dashboard.cate.book.make.edit','uses'=>'Dashboard\BookController@postEdit'])->where('id', '[0-9]+');
+			});
+		});
 	});
+
 
 	Route::group(['prefix'=> 'post'], function(){
 		Route::get('list', ['as'=>'get.dashboard.post.list','uses'=>'Dashboard\PostController@list']);
@@ -36,32 +66,6 @@ Route::group(['prefix'=> 'dashboard'], function(){
 		Route::post('edit/{id}', ['as'=>'post.dashboard.product.edit','uses'=>'Dashboard\ProductController@postEdit'])->where('id', '[0-9]+');
 
 
-		Route::group(['prefix'=> 'prd-att'], function(){
-			Route::get('list', ['as'=>'get.dashboard.product.prdatt.list','uses'=>'Dashboard\PrdAttController@list']);
-			Route::get('create/{code}', ['as'=>'get.dashboard.product.prdatt.create','uses'=>'Dashboard\PrdAttController@create']);
-			Route::get('edit/{code}/{id}', ['as'=>'get.dashboard.product.prdatt.edit','uses'=>'Dashboard\PrdAttController@edit'])->where('id', '[0-9]+');;
-			Route::get('delete/{id}', ['as'=>'get.dashboard.product.prdatt.delete','uses'=>'Dashboard\PrdAttController@delete'])->where('id', '[0-9]+');
-			Route::post('create/{code}', ['as'=>'post.dashboard.product.prdatt.create','uses'=>'Dashboard\PrdAttController@postCreate']);
-			Route::post('edit/{code}/{id}', ['as'=>'post.dashboard.product.prdatt.edit','uses'=>'Dashboard\PrdAttController@postEdit'])->where('id', '[0-9]+');
-		});
-
-		Route::group(['prefix'=> 'att'], function(){
-			Route::get('list', ['as'=>'get.dashboard.product.att.list','uses'=>'Dashboard\AttributesController@list']);
-			Route::get('create/{code}', ['as'=>'get.dashboard.product.att.create','uses'=>'Dashboard\AttributesController@create']);
-			Route::get('edit/{code}/{id}', ['as'=>'get.dashboard.product.att.edit','uses'=>'Dashboard\AttributesController@edit'])->where('id', '[0-9]+');;
-			Route::get('delete/{id}', ['as'=>'get.dashboard.product.att.delete','uses'=>'Dashboard\AttributesController@delete'])->where('id', '[0-9]+');
-			Route::post('create/{code}', ['as'=>'post.dashboard.product.att.create','uses'=>'Dashboard\AttributesController@postCreate']);
-			Route::post('edit/{code}/{id}', ['as'=>'post.dashboard.product.att.edit','uses'=>'Dashboard\AttributesController@postEdit'])->where('id', '[0-9]+');
-		});
-
-		Route::group(['prefix'=> 'price'], function(){
-			Route::get('list', ['as'=>'get.dashboard.product.price.list','uses'=>'Dashboard\SalesPriceController@list']);
-			Route::get('create', ['as'=>'get.dashboard.product.price.create','uses'=>'Dashboard\SalesPriceController@create']);
-			Route::get('edit/{id}', ['as'=>'get.dashboard.product.price.edit','uses'=>'Dashboard\SalesPriceController@edit'])->where('id', '[0-9]+');;
-			Route::get('delete/{id}', ['as'=>'get.dashboard.product.price.delete','uses'=>'Dashboard\SalesPriceController@delete'])->where('id', '[0-9]+');
-			Route::post('create', ['as'=>'post.dashboard.product.price.create','uses'=>'Dashboard\SalesPriceController@postCreate']);
-			Route::post('edit/{id}', ['as'=>'post.dashboard.product.price.edit','uses'=>'Dashboard\SalesPriceController@postEdit'])->where('id', '[0-9]+');
-		});
 	});
 
 

@@ -1,38 +1,38 @@
 @extends('dashboard.app')
-@section('title', 'Categories')
-@section('page-header', 'Edit')
+@section('title', 'Thể loại sách')
+@section('page-header', 'Chỉnh sửa')
 @section('content')
 @include('dashboard.layouts.alert')
-<form class="form-horizontal" role="form" action="{{ route('post.dashboard.cate.edit', ['id'=>$data['id']])}}" method="post" enctype="multipart/form-data">
+<form class="form-horizontal" role="form" action="{{ route('post.dashboard.cate.edit', ['code'=>$code, 'id'=>$data['id']])}}" method="post" enctype="multipart/form-data">
     @csrf
     <div class="form-group">
-        <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Name </label>
+        <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Thể loại sách </label>
         <div class="col-sm-9">
             <input type="text" id="form-field-1" placeholder="Name" name="name" class="col-xs-10 col-sm-5" required="" value="{{ old('name', isset($data) ? $data['name'] : '' ) }}" />
         </div>
     </div>
     <div class="form-group">
-        <label class="col-xs-2 control-label no-padding-right" for="form-field-1"> Root </label>
+        <label class="col-xs-2 control-label no-padding-right" for="form-field-1"> Danh mục cha </label>
         <div class="col-xs-4">
             <select class="form-control" id="form-field-select-1" name="parent" required="">
-                <option></option>
-                {!! menuMulti(App\Models\Categories::getMultiCategory(0), 0, "", old('parent', isset($data) ? $data['parent'] : 1)) !!}
+                <option value="-2">__{{getDanhMuc($code)}}__</option>
+                {!! menuMulti(App\Models\Categories::getMultiCategory(1), 2, "", old('parent', isset($data) ? $data['parent'] : 2)) !!}
             </select>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group hidden">
         <label class="col-xs-2 control-label no-padding-right" for="form-field-1"> Description </label>
         <div class="col-xs-9">
             <textarea name="description" id="description" rows="6" class="col-xs-9 col-sm-5">{{  old('description', isset($data) ? $data['description'] : "")}}</textarea>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group  hidden">
         <label class="col-xs-2 control-label no-padding-right" for="form-field-1"> Content </label>
         <div class="col-xs-9">
             <textarea name="content" id="content" rows="6" class="col-xs-9 col-sm-5">{{  old('content', isset($data) ? $data['content'] : "") }}</textarea>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group hidden">
         <label class="col-xs-2 control-label no-padding-right" for="form-field-1"> Sort </label>
         <div class="col-xs-9">
             <input type="number" name="sort" placeholder="0" class="col-xs-9 col-sm-5" value="0" style="text-align: center;" value="{{   old('sort', isset($data) ? $data['sort'] : 1) }}" />
@@ -78,17 +78,12 @@
         <div class="col-md-offset-2 col-md-9">
             <button class="btn btn-info" type="Submit">
                 <i class="ace-icon fa fa-check bigger-110"></i>
-                Submit
+                Lưu thay đổi
             </button>
             &nbsp; &nbsp; &nbsp;
-            <a class="btn" href="#">
-                <i class="ace-icon fa fa-undo bigger-110"></i>
-                Reset
-            </a>
-            &nbsp; &nbsp; &nbsp;
-            <a class="btn btn-success" href="{{ route('get.dashboard.cate.list') }}">
+            <a class="btn btn-success" href="{{ route('get.dashboard.cate.list', ['code'=>$code]) }}">
                 <i class="ace-icon fa fa-list bigger-110"></i>
-                Categories
+                {{getDanhMuc($code)}}
             </a>
         </div>
     </div>
