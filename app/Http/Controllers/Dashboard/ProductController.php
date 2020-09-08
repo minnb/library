@@ -34,45 +34,44 @@ class ProductController extends Controller
         try{
             DB::beginTransaction();
                 $data = new Product();
-                $data->sku = '';
-                $data->categories = implode("|",$request->category);
-                $data->name = trim($request->name);
+                $data->ma_sach = '';
+                $data->ma_the_loai = $request->ma_the_loai[0];
+                $data->ten_sach = trim($request->name);
                 $data->alias = Str::slug($request->name);
-                $data->description = empty($request->description)?"":$request->description;
-                $data->content = empty($request->content)?"":$request->content;;
+                $data->mon_loai = "";
+                $data->ma_tac_gia = $request->tac_gia[0];
+                $data->nha_xuat_ban = $request->nha_xuat_ban[0];
+                $data->noi_xuat_ban = $request->noi_xuat_ban[0];
+                $data->nam_xuat_ban = date($request->nam_xuat_ban);
+                $data->thong_tin_xuat_ban = empty($request->thong_tin_xuat_ban)?"":$request->thong_tin_xuat_ban;
+                $data->so_trang_sach = empty($request->so_trang_sach)?0:$request->so_trang_sach;
+                $data->don_gia = empty($request->don_gia)?0:$request->don_gia;
+                $data->kich_thuoc_rong = empty($request->kich_thuoc_rong)?0:$request->kich_thuoc_rong;
+                $data->kich_thuoc_cao = empty($request->kich_thuoc_cao)?0:$request->kich_thuoc_cao;
+                $data->gioi_thieu_sach = empty($request->description)?"":$request->description;
+                $data->noi_dung_sach = empty($request->content)?"":$request->content;;
                 $data->blocked = $request->status == 'on' ? 0 : 1;
                 $data->user_id = Auth::user()->id;
-                $data->tax = '';
-                $data->base_unit = '';
                 $data->options = '{}';
-                
+
                 if($request->file('fileImage')){
                     foreach($request->file('fileImage') as $file ){
                         $destinationPath = path_storage('images');
                         if(isset($file)){
                             $file_name = time().randomString().'.'.$file->getClientOriginalExtension();
                             $file->move($destinationPath, $file_name);
-                            $data->thumbnail = $destinationPath.'/'.$file_name;
+                            $data->hinh_anh = $destinationPath.'/'.$file_name;
                         }
                     }
                 }
                 else
                 {
-                    $data->thumbnail = "";
+                    $data->hinh_anh = "";
                 }
 
                 $data->save();
-                DB::table("m_products")->where('id', $data->id)->update(['sku'=>str_pad(strval($data->id),8,"0",STR_PAD_LEFT)]);
 
-                // if(count($request->tags) > 0)
-                // {
-                //     for ($i = 0; $i < count($request->tags); $i++) {
-                //         DB::table('m_post_tag')->insert([
-                //             'post_id' => $data->id,
-                //             'tag_id' => $request->tags[$i]
-                //         ]);
-                //     }
-                // }
+                DB::table("m_products")->where('id', $data->id)->update(['ma_sach'=>str_pad(strval($data->id),8,"0",STR_PAD_LEFT)]);
                 
             DB::commit();
             return redirect()->route('get.dashboard.product.list')->with(['flash_message'=>'Tạo mới thành công']);
@@ -102,11 +101,21 @@ class ProductController extends Controller
         try{
             DB::beginTransaction();
             $data = Product::find($id);
-            $data->categories = implode("|",$request->category);
-            $data->name = trim($request->name);
+            $data->ma_the_loai = $request->ma_the_loai[0];
+            $data->ten_sach = trim($request->name);
             $data->alias = Str::slug($request->name);
-            $data->description = empty($request->description)?"":$request->description;
-            $data->content = empty($request->content)?"":$request->content;;
+            $data->mon_loai = "";
+            $data->ma_tac_gia = $request->tac_gia[0];
+            $data->nha_xuat_ban = $request->nha_xuat_ban[0];
+            $data->noi_xuat_ban = $request->noi_xuat_ban[0];
+            $data->nam_xuat_ban = date($request->nam_xuat_ban);
+            $data->thong_tin_xuat_ban = empty($request->thong_tin_xuat_ban)?"":$request->thong_tin_xuat_ban;
+            $data->so_trang_sach = empty($request->so_trang_sach)?0:$request->so_trang_sach;
+            $data->don_gia = empty($request->don_gia)?0:$request->don_gia;
+            $data->kich_thuoc_rong = empty($request->kich_thuoc_rong)?0:$request->kich_thuoc_rong;
+            $data->kich_thuoc_cao = empty($request->kich_thuoc_cao)?0:$request->kich_thuoc_cao;
+            $data->gioi_thieu_sach = empty($request->description)?"":$request->description;
+            $data->noi_dung_sach = empty($request->content)?"":$request->content;;
             $data->blocked = $request->status == 'on' ? 0 : 1;
             $data->user_id = Auth::user()->id;
             
@@ -116,7 +125,7 @@ class ProductController extends Controller
                     if(isset($file)){
                         $file_name = time().randomString().'.'.$file->getClientOriginalExtension();
                         $file->move($destinationPath, $file_name);
-                        $data->thumbnail = $destinationPath.'/'.$file_name;
+                        $data->hinh_anh = $destinationPath.'/'.$file_name;
                     }
                 }
             }

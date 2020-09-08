@@ -1,5 +1,5 @@
 @extends('dashboard.app')
-@section('title', 'Nhà xuất bản')
+@section('title', 'Tác giả')
 @section('page-header', "Danh sách")
 @section('content')
 @include('dashboard.layouts.alert')
@@ -25,14 +25,12 @@
         <table id="dynamic-table" class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
-                    <th class="center">
-                        <label class="pos-rel">
-                            <input type="checkbox" class="ace" />
-                            <span class="lbl"></span>
-                        </label>
-                    </th>
                     <th>Id</th>
                     <th>Tác giả</th>
+                    <th>Tên đầy đủ</th>
+                    <th>Giới tính</th>
+                    <th>Năm sinh</th>
+                    <th>Quê quán</th>
                     <th>Ngày tạo</th>
                     <th>Trạng thái</th>
                     <th></th>
@@ -40,16 +38,20 @@
                 <tbody>
                     @foreach($data as $key=>$item)
                     <tr>
-                        <td class="center">
-                            <label class="pos-rel">
-                                <input type="checkbox" class="ace" />
-                                <span class="lbl"></span>
-                            </label>
-                        </td>
                         <td>
-                            <a href="{{ route('get.dashboard.cate.book.nxb.edit', ['id'=>$item->id]) }}">{{ $item->id }}</a>
+                            <a href="{{ route('get.dashboard.cate.book.author.edit', ['id'=>$item->id]) }}">{{ $item->id }}</a>
                         </td>
-                        <td><a href="{{ route('get.dashboard.cate.book.nxb.edit', ['id'=>$item->id]) }}">{{ $item->ten_tac_gia }}</a></td>
+                        <td><a href="{{ route('get.dashboard.cate.book.author.edit', ['id'=>$item->id]) }}">{{ $item->ten_tac_gia }}</a></td>
+                        <td><a href="{{ route('get.dashboard.cate.book.author.edit', ['id'=>$item->id]) }}">{{ $item->ten_tac_gia_2 }}</a></td>
+                        <td>
+                            @if($item->gioi_tinh == 0)
+                                <span>Nam</span>
+                            @else
+                                <span>Nữ</span>
+                            @endif
+                        </td>
+                        <td>{{ date($item->nam_sinh) }}</td>
+                        <td>{{ $item->que_quan }}</td>
                         <td>{{ $item->updated_at }}</td>
                         <td>{{ $item->blocked }}</td>
 
@@ -59,15 +61,14 @@
                                     <i class="ace-icon fa fa-search-plus bigger-130"></i>
                                 </a>
 
-                                <a class="green" href="{{ route('get.dashboard.cate.book.nxb.edit', ['id'=>$item->id]) }}">
+                                <a class="green" href="{{ route('get.dashboard.cate.book.author.edit', ['id'=>$item->id]) }}">
                                     <i class="ace-icon fa fa-pencil bigger-130"></i>
                                 </a>
 
-                                <a class="red" href="{{ route('get.dashboard.cate.book.nxb.delete', ['id'=>$item->id]) }}" onclick="return alertDelete();">
+                                <a class="red" href="{{ route('get.dashboard.cate.book.author.delete', ['id'=>$item->id]) }}" onclick="return alertDelete();">
                                     <i class="ace-icon fa fa-trash-o bigger-130"></i>
                                 </a>
                             </div>
-
                             <div class="hidden-md hidden-lg">
                                 <div class="inline pos-rel">
                                     <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
@@ -83,14 +84,14 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="{{ route('get.dashboard.cate.book.nxb.edit', ['id'=>$item->id]) }}" class="tooltip-success" data-rel="tooltip" title="Edit">
+                                            <a href="{{ route('get.dashboard.cate.book.author.edit', ['id'=>$item->id]) }}" class="tooltip-success" data-rel="tooltip" title="Edit">
                                                 <span class="green">
                                                     <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
                                                 </span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="{{ route('get.dashboard.cate.book.nxb.delete', ['id'=>$item->id]) }}" class="tooltip-error" data-rel="tooltip" title="Delete" onclick="return alertDelete();">
+                                            <a href="{{ route('get.dashboard.cate.book.author.delete', ['id'=>$item->id]) }}" class="tooltip-error" data-rel="tooltip" title="Delete" onclick="return alertDelete();">
                                                 <span class="red">
                                                     <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                                 </span>
@@ -126,8 +127,7 @@
             .DataTable( {
                 bAutoWidth: false,
                 "aoColumns": [
-                  { "bSortable": false },
-                  null, null,null, null, 
+                  null, null,null, null, null,null,null,null,
                   { "bSortable": false }
                 ],
                 "aaSorting": [],

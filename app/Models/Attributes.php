@@ -5,17 +5,9 @@ use DB;
 
 class Attributes extends Model
 {
-    protected $table ="m_attributes";
 
     public static function getOptionAttributes($parent){
         return DB::select('select id, code as name from m_attributes where parent = '.$parent.' order by code');
-    }
-
-    public static function getValuesAttributes($code){
-        return DB::table('m_attributes')->where([
-            ['parent', '>', 0],
-            ['code', $code]
-            ])->orderBy('values')->get();
     }
 
     public static function getSelect2Category($type =''){
@@ -27,4 +19,21 @@ class Attributes extends Model
         return $data;
     }
 
+    public static function getNhaXuatBan(){
+        $data = DB::table('s_nha_xuat_ban')->where([
+            ['blocked', 0]
+        ])->select('id','ten_nxb as name')->orderBy('ten_nxb')->get()->toArray();
+        return $data;
+    }
+
+    public static function getNoiXuatBan(){
+        $data = DB::table('s_noi_xuat_ban')->where([
+            ['blocked', 0]
+        ])->select('id','noi_xuat_ban as name')->orderBy('noi_xuat_ban')->get()->toArray();
+        return $data;
+    }
+
+    public static function getObjNXB($id){
+        return DB::table('s_nha_xuat_ban')->where('id', $id)->first();
+    }
 }

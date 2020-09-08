@@ -1,6 +1,6 @@
 @extends('dashboard.app')
-@section('title', 'Product')
-@section('page-header', 'List')
+@section('title', 'Quản lý sách')
+@section('page-header', 'Danh sách')
 @section('content')
 @include('dashboard.layouts.alert')
 <div class="clearfix">
@@ -11,13 +11,13 @@
         <li class="active">
             <a data-toggle="tab" href="#home">
                 <i class="green ace-icon fa fa-home bigger-120"></i>
-                List
+                Danh sách
             </a>
         </li>
         <li>
             <a href="{{ route('get.dashboard.product.create') }}">
                 <i class="red ace-icon fa fa-pencil  bigger-120"></i>
-                Create
+                Tạo mới
             </a>
         </li>
     </ul>
@@ -25,29 +25,26 @@
         <table id="dynamic-table" class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Thumbnail</th>
-                    <th>Sku</th>
-                    <th>Name</th>
-                    <th>Categories</th>
-                    <th>Status</th>
+                    <th>#</th>
+                    <th>Hình ảnh</th>
+                    <th>Mã sách</th>
+                    <th>Tên sách</th>
+                    <th>Thể loại</th>
+                    <th>Nhà xuất bản</th>
+                    <th>Tác giả</th>
+                    <th>Trạng thái</th>
                     <th></th>
                 </tr>
                 <tbody>
                     @foreach($data as $key=>$item)
                     <tr>
-                        <td><a href="{{ route('get.dashboard.product.edit', ['id'=>$item->id]) }}">{{ $item->id }}</a></td>
-                        <td><img style="max-width:60px;" src="{{ asset(getImage($item->thumbnail)) }}"></td>
-                        <td><a href="{{ route('get.dashboard.product.edit', ['id'=>$item->id]) }}">{{ $item->sku }}</a></td>
-                        <td><a href="{{ route('get.dashboard.product.edit', ['id'=>$item->id]) }}">{{ $item->name }}</a></td>
-                        <td>
-                            <?php $listCate = App\Models\Categories::getCateByArr(convertStrToArr("|", $item->categories)); ?>
-                            @if(isset($listCate))
-                                @foreach($listCate as $i)
-                                    <span style="color:{{ randomColor(rand(1, 9)) }}">{{ $i->name }}; </span>
-                                @endforeach
-                            @endif
-                        </td>
+                        <td><a href="{{ route('get.dashboard.product.edit', ['id'=>$item->id]) }}">{{ $key + 1 }}</a></td>
+                        <td><img style="max-height:60px;max-height:60px;" src="{{ asset(getImage($item->hinh_anh)) }}"></td>
+                        <td><a href="{{ route('get.dashboard.product.edit', ['id'=>$item->id]) }}">{{ $item->ma_sach }}</a></td>
+                        <td><a href="{{ route('get.dashboard.product.edit', ['id'=>$item->id]) }}">{{ $item->ten_sach }}</a></td>
+                        <td>{{ App\Models\Categories::find($item->ma_the_loai)->name }}</td>
+                        <td>{{ App\Models\Attributes::getObjNXB($item->nha_xuat_ban)->ten_nxb }}</td>
+                        <td>{{ App\Models\Author::find($item->ma_tac_gia)->ten_tac_gia }}</td>
                         <td>{{ $item->blocked }}</td>
                         <td>
                             <div class="hidden-sm hidden-xs action-buttons">
@@ -70,7 +67,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="{{ route('get.dashboard.product.price.delete', ['id'=>$item->id]) }}" class="tooltip-error" data-rel="tooltip" title="Delete" onclick="return alertDelete();">
+                                            <a href="{{ route('get.dashboard.product.delete', ['id'=>$item->id]) }}" class="tooltip-error" data-rel="tooltip" title="Delete" onclick="return alertDelete();">
                                                 <span class="red">
                                                     <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                                 </span>
@@ -106,8 +103,7 @@
             .DataTable( {
                 bAutoWidth: false,
                 "aoColumns": [
-                  { "bSortable": false },
-                  null, null,null, null, null,
+                  null, null,null, null, null,null,null,null,
                   { "bSortable": false }
                 ],
                 "aaSorting": [],

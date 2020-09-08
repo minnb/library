@@ -1,26 +1,30 @@
 @extends('dashboard.app')
 @section('title', 'Tác giả')
-@section('page-header', "Tạo mới")
+@section('page-header', "Chỉnh sửa")
 @section('content')
 @include('dashboard.layouts.alert')
-<form class="form-horizontal" role="form" action="{{ route('post.dashboard.cate.book.author.create')}}" method="post" enctype="multipart/form-data">
+<form class="form-horizontal" role="form" action="{{ route('post.dashboard.cate.book.author.edit', ['id'=>$id])}}" method="post" enctype="multipart/form-data">
     @csrf
     <div class="form-group">
         <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Bút danh </label>
         <div class="col-sm-9">
-            <input type="text" id="form-field-1" name="name" class="col-xs-10 col-sm-5" required="" value="{{ old('name')}}" />
+            <input type="text" id="form-field-1" name="name" class="col-xs-10 col-sm-5" required="" value="{{ old('name', isset($data) ? $data['ten_tac_gia'] : '') }}" />
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Tên tác giả </label>
         <div class="col-sm-9">
-            <input type="text" id="form-field-1" name="name2" class="col-xs-10 col-sm-5" required="" value="{{ old('name2')}}" />
+            <input type="text" id="form-field-1" name="name2" class="col-xs-10 col-sm-5" required="" value="{{ old('name2', isset($data) ? $data['ten_tac_gia_2'] : '') }}" />
         </div>
     </div>
     <div class="form-group">
         <label class="col-xs-2 control-label no-padding-right">Giới tính (Nam/Nữ)</label>
         <div class="col-xs-9">
-            <input name="gioi_tinh" class="ace ace-switch ace-switch-7 btn-rotate" type="checkbox" checked="true" />
+             @if($data['gioi_tinh'] == 0)
+                <input name="status" class="ace ace-switch ace-switch-7 btn-rotate" type="checkbox" checked="true" />
+            @else
+                <input name="status" class="ace ace-switch ace-switch-7 btn-rotate" type="checkbox" />
+            @endif
             <span class="lbl"></span>
         </div>
     </div>
@@ -28,7 +32,7 @@
         <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Năm sinh </label>
        <div class="col-xs-9">
             <div class="col-xs-5 input-group">
-                <input class="form-control date-picker" id="id-date-picker-1" type="text" placeholder="yyyy-mm-dd" data-date-format="yyyy-mm-dd" name="nam_sinh" required value="{{ old('nam_sinh')}}"/>
+                <input class="form-control date-picker" id="id-date-picker-1" type="text" placeholder="dd/mm/yyyy" data-date-format="yyyy-mm-dd" name="nam_sinh" required value="{{ old('nam_sinh', isset($data) ? $data['nam_sinh'] : '') }}"/>
                 <span class="input-group-addon">
                     <i class="fa fa-calendar bigger-110"></i>
                 </span>
@@ -38,13 +42,17 @@
     <div class="form-group">
         <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Quê quán</label>
         <div class="col-sm-9">
-            <input type="text" id="form-field-1" name="que_quan" class="col-xs-10 col-sm-5" required="" value="{{ old('que_quan')}}" />
+            <input type="text" id="form-field-1" name="que_quan" class="col-xs-10 col-sm-5" required="" value="{{ old('que_quan', isset($data) ? $data['que_quan'] : '') }}" />
         </div>
     </div>
     <div class="form-group">
-        <label class="col-xs-2 control-label no-padding-right">Trạng thái</label>
+        <label class="col-xs-2 control-label no-padding-right">Status</label>
         <div class="col-xs-9">
-            <input name="status" class="ace ace-switch ace-switch-4 btn-rotate" type="checkbox" checked="true" />
+             @if($data['blocked'] == 0)
+                <input name="status" class="ace ace-switch ace-switch-4 btn-rotate" type="checkbox" checked="true" />
+            @else
+                <input name="status" class="ace ace-switch ace-switch-4 btn-rotate" type="checkbox" />
+            @endif
             <span class="lbl"></span>
         </div>
     </div>
@@ -66,7 +74,7 @@
         <div class="col-md-offset-2 col-md-9">
             <button class="btn btn-info" type="Submit">
                 <i class="ace-icon fa fa-check bigger-110"></i>
-                Tạo mới
+                Lưu thay đổi
             </button>
             &nbsp; &nbsp; &nbsp;
             <a class="btn btn-success" href="{{ route('get.dashboard.cate.book.author.list') }}">

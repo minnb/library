@@ -80,10 +80,12 @@ class CategoriesSeeder extends Seeder
         ]);
 
         DB::table('s_tac_gia')->insert([
-            'ten_tac_gia' => 'Tố Hữu',
+            'ten_tac_gia' => 'Tô Hoài',
+            'ten_tac_gia_2' => 'Nguyễn Sen',
+            'gioi_tinh' => 0,
             'alias' => Str::slug('Tố Hữu'),
-            'nam_sinh' => '1920-10-04',
-            'que_quan' => 'Hội An - Quảng Nam',
+            'nam_sinh' => '1920-09-27',
+            'que_quan' => 'Thanh Oai - Hà Nội',
             'the_loai' => '',
             'gioi_thieu' => '',
             'noi_dung' => '',

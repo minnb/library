@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 use Log; use DB;
 use Auth;use Image;
 use App\Models\Author;
-
+use App\Models\Product;
 
 class BookController extends Controller
 {
@@ -49,17 +49,19 @@ class BookController extends Controller
             DB::beginTransaction();
                 $data = new Author();
                 $data->ten_tac_gia = trim($request->name);
+                $data->ten_tac_gia_2 = trim($request->name2);
                 $data->alias = Str::slug($request->name);
                 $data->gioi_thieu = empty($request->description)?"":$request->description;
                 $data->noi_dung = empty($request->content)?"":$request->content;;
-                $data->nam_sinh = $request->nam_sinh;
+                $data->nam_sinh = date($request->nam_sinh);
                 $data->the_loai = "";
                 $data->que_quan = $request->que_quan;
+                $data->gioi_tinh = $request->gioi_tinh == 'on' ? 0 : 1;
                 $data->blocked = $request->status == 'on' ? 0 : 1;
                 $data->user_id = Auth::user()->id;
                 $data->options = '{}';
                 $data->save();
-                
+                    
             DB::commit();
             return redirect()->route('get.dashboard.cate.book.author.list')->with(['flash_message'=>'Tạo mới thành công']);
         }
@@ -74,24 +76,26 @@ class BookController extends Controller
     {
         try
         {
-            $data = Categories::find($id);
-            return view('dashboard.cate.edit', compact('data','code'));
+            $data = Author::find($id);
+            return view('dashboard.book.author_edit', compact('data', 'id'));
         }
         catch (\Exception $e) 
         {
-            return back()->withErrors($e->getMessage())->withInput($request->input());
+            return back()->withErrors($e->getMessage());
         }
     }
 	
-    public function postEditAuthor(Request $request,$id)
+    public function postEditAuthor(Request $request, $id)
     {
         try{
             DB::beginTransaction();
                 $data = Author::find($id);
                 $data->ten_tac_gia = trim($request->name);
                 $data->alias = Str::slug($request->name);
-                $data->nam_sinh = $request->nam_sinh;
+                $data->nam_sinh = date($request->nam_sinh);
                 $data->que_quan = $request->que_quan;
+                $data->ten_tac_gia_2 = trim($request->name2);
+                $data->gioi_tinh = $request->gioi_tinh == 'on' ? 0 : 1;
                 $data->blocked = $request->status == 'on' ? 0 : 1;
                 $data->user_id = Auth::user()->id;
                 $data->save();  
@@ -110,7 +114,11 @@ class BookController extends Controller
         try
         {
             DB::beginTransaction();
-                DB::table('s_tac_gia')->where('id', $id)->update(['blocked'=>1]);
+                if(Product::where('ma_tac_gia', $id)->first()){
+                    DB::table('s_tac_gia')->where('id', $id)->update(['blocked'=>1]);
+                }else{
+                    DB::table('s_tac_gia')->where('id', $id)->delete();
+                }
             DB::commit();
             return redirect()->route('get.dashboard.cate.book.author.list')->with(['flash_message'=>'Xóa thành công']);
         }

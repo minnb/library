@@ -146,3 +146,4 @@ function delete_image_no_path($img){
 
 include('Const.php');
 include('FunStr.php');
+include('FunsCss.php');

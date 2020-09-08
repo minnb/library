@@ -1,50 +1,3 @@
-<?php
-    function getRootCSS($name)
-    {
-        $route_name = \Str::upper(\Request::route()->getName());
-        if(\Str::contains($route_name, \Str::upper($name))){
-            echo "active open";
-        }
-        else
-        {
-            echo "";
-        }
-    }
-
-    function getActiveCSS($name)
-    {
-        $route_name = \Str::upper(\Request::route()->getName());
-        if(\Str::upper($name) == $route_name || \Str::contains($route_name, \Str::upper($name))){
-            echo "active";
-        }
-        else
-        {
-            echo "";
-        }
-    }
-    function getActiveCSSByCode($code)
-    {
-        $route_name = url()->current();
-        if(Str::contains($route_name, $code)){
-            echo "active";
-        }
-        else
-        {
-            echo "";
-        }
-    }
-    function getActiveRoot($name)
-    {
-        $route_name = \Str::upper(\Request::route()->getName());
-        if(\Str::upper($name) == $route_name){
-            echo "active";
-        }
-        else
-        {
-            echo "";
-        }
-    }
-?>
 <div id="sidebar" class="sidebar                  responsive                    ace-save-state">
     <script type="text/javascript">
         try { ace.settings.loadState('sidebar'); } catch (e) { console.log(e); }
@@ -143,12 +96,19 @@
             <b class="arrow"></b>
 
             <ul class="submenu">
-                <li class="{{ getActiveCSS('get.dashboard.product.list') }}">
+                <li class="{{ getActiveCSS('get.dashboard.product') }}">
                     <a href="{{ route('get.dashboard.product.list') }}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         Quản lý Sách
                     </a>
+                    <b class="arrow"></b>
+                </li>
 
+                <li class="{{ getActiveCSS('get.dashboard.sach') }}">
+                    <a href="#">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Thanh lý Sách
+                    </a>
                     <b class="arrow"></b>
                 </li>
 

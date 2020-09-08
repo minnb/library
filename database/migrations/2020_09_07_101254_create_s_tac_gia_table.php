@@ -15,9 +15,11 @@ class CreateSTacGiaTable extends Migration
     {
         Schema::create('s_tac_gia', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->string('ten_tac_gia');
+            $table->string('ten_tac_gia', 120);
+            $table->string('ten_tac_gia_2');
             $table->string('alias')->unique();
             $table->date('nam_sinh');
+            $table->boolean('gioi_tinh');
             $table->string('que_quan');
             $table->string('the_loai');
             $table->text('gioi_thieu');

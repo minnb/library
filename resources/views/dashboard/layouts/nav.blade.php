@@ -13,7 +13,7 @@
         <div class="navbar-header pull-left">
             <a href="{{ url('dashboard') }}" class="navbar-brand">
                 <small>
-                    <i class="fa fa-cubes"></i>
+                    <i class="fa fa-book"></i>
                     {{ config('app.name', 'Laravel') }} 
                 </small>
             </a>

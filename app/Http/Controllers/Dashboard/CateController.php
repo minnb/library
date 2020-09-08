@@ -92,7 +92,7 @@ class CateController extends Controller
         }
     }
 	
-    public function postEdit(Request $request, $code, $id)
+    public function postEdit(Request $request, $id)
     {
         try{
             DB::beginTransaction();
