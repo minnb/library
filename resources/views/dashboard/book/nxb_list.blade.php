@@ -25,34 +25,23 @@
         <table id="dynamic-table" class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
-                    <th class="center">
-                        <label class="pos-rel">
-                            <input type="checkbox" class="ace" />
-                            <span class="lbl"></span>
-                        </label>
-                    </th>
-                    <th>Id</th>
+                    <th>#</th>
                     <th>Tên nhà xuất bản</th>
-                    <th>Ngày tạo</th>
+                    <th>Tên đầy đủ</th>
+                    <th>Điện thoại</th>
+                    <th>Địa chỉ</th>
                     <th>Trạng thái</th>
                     <th></th>
                 </tr>
                 <tbody>
                     @foreach($data as $key=>$item)
                     <tr>
-                        <td class="center">
-                            <label class="pos-rel">
-                                <input type="checkbox" class="ace" />
-                                <span class="lbl"></span>
-                            </label>
-                        </td>
-                        <td>
-                            <a href="{{ route('get.dashboard.cate.book.nxb.edit', ['id'=>$item->id]) }}">{{ $item->id }}</a>
-                        </td>
+                        <td>{{ $key + 1 }}</td>
                         <td><a href="{{ route('get.dashboard.cate.book.nxb.edit', ['id'=>$item->id]) }}">{{ $item->ten_nxb }}</a></td>
-                        <td>{{ $item->updated_at }}</td>
+                        <td><a href="{{ route('get.dashboard.cate.book.nxb.edit', ['id'=>$item->id]) }}">{{ $item->ten_nxb_2 }}</a></td>
+                        <td>{{ $item->dien_thoai }}</td>
+                        <td>{{ $item->dia_chi }}</td>
                         <td>{{ $item->blocked }}</td>
-
                         <td>
                             <div class="hidden-sm hidden-xs action-buttons">
                                 <a class="blue" href="#">
@@ -126,8 +115,7 @@
             .DataTable( {
                 bAutoWidth: false,
                 "aoColumns": [
-                  { "bSortable": false },
-                  null, null,null, null, 
+                  null, null,null, null, null, null, 
                   { "bSortable": false }
                 ],
                 "aaSorting": [],

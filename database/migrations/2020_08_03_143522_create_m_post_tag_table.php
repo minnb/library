@@ -17,7 +17,7 @@ class CreateMPostTagTable extends Migration
             $table->id();
             $table->bigInteger('post_id');
             $table->bigInteger('tag_id');
-            $table->timestamps();
+            $table->timestamps(0);
         });
     }
 

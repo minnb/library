@@ -156,4 +156,6 @@ class ProductController extends Controller
             return back()->withErrors($e->getMessage())->withInput($request->input());
         }
     }
+
+
 }

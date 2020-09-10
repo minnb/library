@@ -115,6 +115,15 @@
             </ul>
         </li>
 
+        <li class="{{ getRootCSS('dashboard.ks') }}">
+            <a href="{{ route('get.dashboard.ks.list') }}">
+                <i class="menu-icon fa fa-barcode"></i>
+                <span class="menu-text"> Quản lý Kệ Sách </span>
+            </a>
+
+            <b class="arrow"></b>
+        </li>
+
         <li class="{{ getRootCSS('dashboard.post') }}">
             <a href="#" class="dropdown-toggle">
                 <i class="menu-icon fa fa-pencil-square-o"></i>
@@ -147,7 +156,7 @@
 
         <li class="{{ getRootCSS('dashboard.post') }}">
             <a href="#" class="dropdown-toggle">
-                <i class="menu-icon fa fa-tachometer"></i>
+                <i class="menu-icon fa fa-bar-chart-o"></i>
                 <span class="menu-text"> Báo cáo </span>
 
                 <b class="arrow fa fa-angle-down"></b>

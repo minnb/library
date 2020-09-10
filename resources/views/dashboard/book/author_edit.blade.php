@@ -46,7 +46,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-xs-2 control-label no-padding-right">Status</label>
+        <label class="col-xs-2 control-label no-padding-right">Trạng thái</label>
         <div class="col-xs-9">
              @if($data['blocked'] == 0)
                 <input name="status" class="ace ace-switch ace-switch-4 btn-rotate" type="checkbox" checked="true" />

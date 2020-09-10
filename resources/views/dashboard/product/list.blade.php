@@ -32,6 +32,7 @@
                     <th>Thể loại</th>
                     <th>Nhà xuất bản</th>
                     <th>Tác giả</th>
+                    <th>Đơn giá</th>
                     <th>Trạng thái</th>
                     <th></th>
                 </tr>
@@ -45,6 +46,7 @@
                         <td>{{ App\Models\Categories::find($item->ma_the_loai)->name }}</td>
                         <td>{{ App\Models\Attributes::getObjNXB($item->nha_xuat_ban)->ten_nxb }}</td>
                         <td>{{ App\Models\Author::find($item->ma_tac_gia)->ten_tac_gia }}</td>
+                        <td>{{ number_format($item->don_gia) }}</td>
                         <td>{{ $item->blocked }}</td>
                         <td>
                             <div class="hidden-sm hidden-xs action-buttons">
@@ -103,7 +105,7 @@
             .DataTable( {
                 bAutoWidth: false,
                 "aoColumns": [
-                  null, null,null, null, null,null,null,null,
+                  null, null,null, null, null,null,null,null,null,
                   { "bSortable": false }
                 ],
                 "aaSorting": [],

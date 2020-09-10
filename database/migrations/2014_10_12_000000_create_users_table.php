@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->boolean('blocked')->default(0);
-            $table->timestamps();
+            $table->timestamps(0);
         });
     }
 

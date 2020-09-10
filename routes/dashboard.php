@@ -16,11 +16,11 @@ Route::group(['prefix'=> 'dashboard'], function(){
 		Route::group(['prefix'=> 'book'], function(){
 			Route::group(['prefix'=> 'nha-xuat-ban'], function(){
 				Route::get('list', ['as'=>'get.dashboard.cate.book.nxb.list','uses'=>'Dashboard\BookController@nxb_list']);
-				Route::get('create', ['as'=>'get.dashboard.cate.book.nxb.create','uses'=>'Dashboard\BookController@create']);
-				Route::get('edit/{id}', ['as'=>'get.dashboard.cate.book.nxb.edit','uses'=>'Dashboard\BookController@edit'])->where('id', '[0-9]+');;
-				Route::get('delete/{id}', ['as'=>'get.dashboard.cate.book.nxb.delete','uses'=>'Dashboard\BookController@delete'])->where('id', '[0-9]+');
-				Route::post('create', ['as'=>'post.dashboard.cate.book.nxb.create','uses'=>'Dashboard\BookController@postCreate']);
-				Route::post('edit/{id}', ['as'=>'post.dashboard.cate.book.nxb.edit','uses'=>'Dashboard\BookController@postEdit'])->where('id', '[0-9]+');
+				Route::get('create', ['as'=>'get.dashboard.cate.book.nxb.create','uses'=>'Dashboard\BookController@nxb_create']);
+				Route::get('edit/{id}', ['as'=>'get.dashboard.cate.book.nxb.edit','uses'=>'Dashboard\BookController@nxb_edit'])->where('id', '[0-9]+');;
+				Route::get('delete/{id}', ['as'=>'get.dashboard.cate.book.nxb.delete','uses'=>'Dashboard\BookController@nxb_delete'])->where('id', '[0-9]+');
+				Route::post('create', ['as'=>'post.dashboard.cate.book.nxb.create','uses'=>'Dashboard\BookController@postCreateNXB']);
+				Route::post('edit/{id}', ['as'=>'post.dashboard.cate.book.nxb.edit','uses'=>'Dashboard\BookController@postEditNXB'])->where('id', '[0-9]+');
 			});
 
 			Route::group(['prefix'=> 'tac-gia'], function(){
@@ -65,7 +65,15 @@ Route::group(['prefix'=> 'dashboard'], function(){
 		Route::post('create', ['as'=>'post.dashboard.product.create','uses'=>'Dashboard\ProductController@postCreate']);
 		Route::post('edit/{id}', ['as'=>'post.dashboard.product.edit','uses'=>'Dashboard\ProductController@postEdit'])->where('id', '[0-9]+');
 
+	});
 
+	Route::group(['prefix'=> 'ke-sach'], function(){
+		Route::get('list', ['as'=>'get.dashboard.ks.list','uses'=>'Dashboard\BookshelfController@list']);
+		Route::get('create', ['as'=>'get.dashboard.ks.create','uses'=>'Dashboard\BookshelfController@create']);
+		Route::get('edit/{id}', ['as'=>'get.dashboard.ks.edit','uses'=>'Dashboard\BookshelfController@edit'])->where('id', '[0-9]+');;
+		Route::get('delete/{id}', ['as'=>'get.dashboard.ks.delete','uses'=>'Dashboard\BookshelfController@delete'])->where('id', '[0-9]+');
+		Route::post('create', ['as'=>'post.dashboard.ks.create','uses'=>'Dashboard\BookshelfController@postCreate']);
+		Route::post('edit/{id}', ['as'=>'post.dashboard.ks.edit','uses'=>'Dashboard\BookshelfController@postEdit'])->where('id', '[0-9]+');
 	});
 
 

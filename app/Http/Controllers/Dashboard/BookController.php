@@ -15,27 +15,11 @@ class BookController extends Controller
         $this->middleware('admin');
     }
 
-    public function nxb_list()
-    {
-        $data = DB::table("s_nha_xuat_ban")->get();;
-    	return view('dashboard.book.nxb_list', compact('data'));
-    }
-
+    //Tac gia
     public function author_list()
     {
         $data = DB::table("s_tac_gia")->get();;
         return view('dashboard.book.author_list', compact('data'));
-    }
-
-    public function make_list()
-    {
-        $data = DB::table("s_noi_xuat_ban")->get();;
-        return view('dashboard.book.make_list', compact('data'));
-    }
-
-    public function nxb_create()
-    {
-        return view('dashboard.cate.create', compact('code'));
     }
 
     public function author_create()
@@ -126,6 +110,104 @@ class BookController extends Controller
         {
             DB::rollBack();
             return back()->withErrors($e->getMessage())->withInput($request->input());
+        }
+    }
+
+    //Noi xua ban
+    public function make_list()
+    {
+        $data = DB::table("s_noi_xuat_ban")->get();;
+        return view('dashboard.book.make_list', compact('data'));
+    }
+
+    //Nha xuat ban
+    public function nxb_list()
+    {
+        $data = DB::table("s_nha_xuat_ban")->get();;
+        return view('dashboard.book.nxb_list', compact('data'));
+    }
+
+    public function nxb_create()
+    {
+        return view('dashboard.book.nxb_create');
+    }
+
+    public function postCreateNXB(Request $request)
+    {
+        try{
+            DB::beginTransaction();
+                DB::table('s_nha_xuat_ban')->insert([
+                    'ten_nxb' => trim($request->ten_nxb),
+                    'ten_nxb_2' =>  empty($request->ten_nxb_2) ? trim($request->ten_nxb) : trim($request->ten_nxb_2),
+                    'alias' => Str::slug($request->ten_nxb),
+                    'dien_thoai' => empty($request->dien_thoai)?"":$request->dien_thoai,
+                    'dia_chi' => empty($request->dia_chi)?"":$request->dia_chi,
+                    'thong_tin_khac' => empty($request->thong_tin_khac)?"":$request->thong_tin_khac,
+                    'blocked' => $request->status == 'on' ? 0 : 1,
+                    'options' => '{}',
+                    'user_id' => Auth::user()->id,
+                ]);
+            DB::commit();
+            return redirect()->route('get.dashboard.cate.book.nxb.list')->with(['flash_message'=>'Tạo mới thành công']);
+        }
+        catch (\Exception $e) 
+        {
+            DB::rollBack();
+            return back()->withErrors($e->getMessage())->withInput($request->input());
+        }
+    }
+
+    public function nxb_edit($id)
+    {
+        try
+        {
+            $data = DB::table('s_nha_xuat_ban')->where('id', $id)->get()[0];
+            return view('dashboard.book.xnb_edit', compact('data', 'id'));
+        }
+        catch (\Exception $e) 
+        {
+            return back()->withErrors($e->getMessage());
+        }
+    }
+
+    public function postEditNXB(Request $request, $id)
+    {
+        try{
+            DB::beginTransaction();
+                DB::table('s_nha_xuat_ban')->where('id', $id)->update([
+                    'ten_nxb' => trim($request->ten_nxb),
+                    'ten_nxb_2' =>  empty($request->ten_nxb_2) ? trim($request->ten_nxb) : trim($request->ten_nxb_2),
+                    'alias' => Str::slug($request->ten_nxb),
+                    'dien_thoai' => empty($request->dien_thoai)?"":$request->dien_thoai,
+                    'dia_chi' => empty($request->dia_chi)?"":$request->dia_chi,
+                    'thong_tin_khac' => empty($request->thong_tin_khac)?"":$request->thong_tin_khac,
+                    'blocked' => $request->status == 'on' ? 0 : 1,
+                    'user_id' => Auth::user()->id,
+                ]);
+            DB::commit();
+            return redirect()->route('get.dashboard.cate.book.nxb.list')->with(['flash_message'=>'Chỉnh sửa thành công']);
+        }
+        catch (\Exception $e) 
+        {
+            DB::rollBack();
+            return back()->withErrors($e->getMessage());
+        }
+    }
+    public function nxb_delete($id)
+    {
+        try
+        {
+            $check = Product::where('ma_tac_gia', $id)->get();
+            if($check->count() > 0){
+                DB::table('s_nha_xuat_ban')->where('id', $id)->update(['blocked'=>1]);
+            }else{
+                DB::table('s_nha_xuat_ban')->where('id', $id)->delete();
+            }
+            return redirect()->route('get.dashboard.cate.book.nxb.list')->with(['flash_message'=>'Thao tác thành công']);
+        }
+        catch (\Exception $e) 
+        {
+            return back()->withErrors($e->getMessage());
         }
     }
 }

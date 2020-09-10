@@ -1,5 +1,6 @@
 @extends('dashboard.app')
 @section('title', 'Dashboard')
+@section('page-header', "overview & stats")
 @section('content')
     <div class="alert alert-block alert-success">
         <button type="button" class="close" data-dismiss="alert">

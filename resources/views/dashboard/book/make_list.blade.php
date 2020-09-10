@@ -15,7 +15,7 @@
             </a>
         </li>
         <li>
-            <a href="{{ route('get.dashboard.cate.book.make.create') }}">
+            <a href="#">
                 <i class="red ace-icon fa fa-pencil  bigger-120"></i>
                 Tạo mới 
             </a>
@@ -25,13 +25,7 @@
         <table id="dynamic-table" class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
-                    <th class="center">
-                        <label class="pos-rel">
-                            <input type="checkbox" class="ace" />
-                            <span class="lbl"></span>
-                        </label>
-                    </th>
-                    <th>Id</th>
+                    <th>#</th>
                     <th>Nơi xuất bản</th>
                     <th>Ngày tạo</th>
                     <th>Trạng thái</th>
@@ -40,30 +34,21 @@
                 <tbody>
                     @foreach($data as $key=>$item)
                     <tr>
-                        <td class="center">
-                            <label class="pos-rel">
-                                <input type="checkbox" class="ace" />
-                                <span class="lbl"></span>
-                            </label>
-                        </td>
-                        <td>
-                            <a href="{{ route('get.dashboard.cate.book.make.edit', ['id'=>$item->id]) }}">{{ $item->id }}</a>
-                        </td>
+                        <td>{{ $key + 1 }}</td>    
                         <td><a href="{{ route('get.dashboard.cate.book.make.edit', ['id'=>$item->id]) }}">{{ $item->noi_xuat_ban }}</a></td>
                         <td>{{ $item->updated_at }}</td>
                         <td>{{ $item->blocked }}</td>
-
                         <td>
                             <div class="hidden-sm hidden-xs action-buttons">
                                 <a class="blue" href="#">
                                     <i class="ace-icon fa fa-search-plus bigger-130"></i>
                                 </a>
 
-                                <a class="green" href="{{ route('get.dashboard.cate.book.make.edit', ['id'=>$item->id]) }}">
+                                <a class="green" href="#">
                                     <i class="ace-icon fa fa-pencil bigger-130"></i>
                                 </a>
 
-                                <a class="red" href="{{ route('get.dashboard.cate.book.make.delete', ['id'=>$item->id]) }}" onclick="return alertDelete();">
+                                <a class="red" href="#" onclick="return alertDelete();">
                                     <i class="ace-icon fa fa-trash-o bigger-130"></i>
                                 </a>
                             </div>
@@ -83,14 +68,14 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="{{ route('get.dashboard.cate.book.make.edit', ['id'=>$item->id]) }}" class="tooltip-success" data-rel="tooltip" title="Edit">
+                                            <a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
                                                 <span class="green">
                                                     <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
                                                 </span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="{{ route('get.dashboard.cate.book.make.delete', ['id'=>$item->id]) }}" class="tooltip-error" data-rel="tooltip" title="Delete" onclick="return alertDelete();">
+                                            <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete" onclick="return alertDelete();">
                                                 <span class="red">
                                                     <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                                 </span>
@@ -126,7 +111,6 @@
             .DataTable( {
                 bAutoWidth: false,
                 "aoColumns": [
-                  { "bSortable": false },
                   null, null,null, null, 
                   { "bSortable": false }
                 ],

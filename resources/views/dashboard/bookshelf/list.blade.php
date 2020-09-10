@@ -1,5 +1,5 @@
 @extends('dashboard.app')
-@section('title', 'Tác giả')
+@section('title', 'Quản lý kệ sách')
 @section('page-header', "Danh sách")
 @section('content')
 @include('dashboard.layouts.alert')
@@ -15,7 +15,7 @@
             </a>
         </li>
         <li>
-            <a href="{{ route('get.dashboard.cate.book.author.create') }}">
+            <a href="{{ route('get.dashboard.ks.create') }}">
                 <i class="red ace-icon fa fa-pencil  bigger-120"></i>
                 Tạo mới 
             </a>
@@ -26,12 +26,11 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Tác giả</th>
-                    <th>Tên đầy đủ</th>
-                    <th>Giới tính</th>
-                    <th>Năm sinh</th>
-                    <th>Quê quán</th>
-                    <th>Ngày tạo</th>
+                    <th>Số kệ</th>
+                    <th>Tên kệ sách</th>
+                    <th>Số ô sách</th>
+                    <th>Thể loại sách</th>
+                    <th>Kích thước</th>
                     <th>Trạng thái</th>
                     <th></th>
                 </tr>
@@ -39,40 +38,32 @@
                     @foreach($data as $key=>$item)
                     <tr>
                         <td>{{ $key + 1 }}</td>
-                        <td><a href="{{ route('get.dashboard.cate.book.author.edit', ['id'=>$item->id]) }}">{{ $item->ten_tac_gia }}</a></td>
-                        <td><a href="{{ route('get.dashboard.cate.book.author.edit', ['id'=>$item->id]) }}">{{ $item->ten_tac_gia_2 }}</a></td>
+                        <td><a href="{{ route('get.dashboard.ks.edit', ['id'=>$item->id]) }}">{{ $item->so_ke }}</a></td>
+                        <td><a href="{{ route('get.dashboard.ks.edit', ['id'=>$item->id]) }}">{{ $item->ten_ke_sach }}</a></td>
+                        <td></td>
                         <td>
-                            @if($item->gioi_tinh == 0)
-                                <span>Nam</span>
-                            @else
-                                <span>Nữ</span>
+                            <?php $listCate = App\Models\Categories::getCateByArr(convertStrToArr("|", $item->the_loai_sach)); ?>
+                            @if(isset($listCate))
+                                @foreach($listCate as $i)
+                                    <span style="color:{{ randomColor(rand(1, 9)) }}">{{ $i->name }}; </span>
+                                @endforeach
                             @endif
                         </td>
-                        <td>{{ date($item->nam_sinh) }}</td>
-                        <td>{{ $item->que_quan }}</td>
-                        <td>{{ date($item->created_at) }}</td>
+                        <td>{{ $item->chieu_rong }} x {{ $item->chieu_cao }} x {{ $item->chieu_dai }}</td>
                         <td>{{ $item->blocked }}</td>
-
                         <td>
                             <div class="hidden-sm hidden-xs action-buttons">
-                                <a class="blue" href="#">
-                                    <i class="ace-icon fa fa-search-plus bigger-130"></i>
-                                </a>
-
-                                <a class="green" href="{{ route('get.dashboard.cate.book.author.edit', ['id'=>$item->id]) }}">
+                                <a class="green" href="{{ route('get.dashboard.ks.edit', ['id'=>$item->id]) }}">
                                     <i class="ace-icon fa fa-pencil bigger-130"></i>
                                 </a>
 
-                                <a class="red" href="{{ route('get.dashboard.cate.book.author.delete', ['id'=>$item->id]) }}" onclick="return alertDelete();">
+                                <a class="red" href="{{ route('get.dashboard.ks.delete', ['id'=>$item->id]) }}" onclick="return alertDelete();">
                                     <i class="ace-icon fa fa-trash-o bigger-130"></i>
                                 </a>
                             </div>
+
                             <div class="hidden-md hidden-lg">
                                 <div class="inline pos-rel">
-                                    <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
-                                        <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
-                                    </button>
-
                                     <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
                                         <li>
                                             <a href="#" class="tooltip-info" data-rel="tooltip" title="View">
@@ -82,14 +73,14 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="{{ route('get.dashboard.cate.book.author.edit', ['id'=>$item->id]) }}" class="tooltip-success" data-rel="tooltip" title="Edit">
+                                            <a href="{{ route('get.dashboard.ks.edit', ['id'=>$item->id]) }}" class="tooltip-success" data-rel="tooltip" title="Edit">
                                                 <span class="green">
                                                     <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
                                                 </span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="{{ route('get.dashboard.cate.book.author.delete', ['id'=>$item->id]) }}" class="tooltip-error" data-rel="tooltip" title="Delete" onclick="return alertDelete();">
+                                            <a href="{{ route('get.dashboard.ks.delete', ['id'=>$item->id]) }}" class="tooltip-error" data-rel="tooltip" title="Delete" onclick="return alertDelete();">
                                                 <span class="red">
                                                     <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                                 </span>
@@ -125,7 +116,7 @@
             .DataTable( {
                 bAutoWidth: false,
                 "aoColumns": [
-                  null, null,null, null, null,null,null,null,
+                  null, null,null, null, null, null, null,
                   { "bSortable": false }
                 ],
                 "aaSorting": [],
