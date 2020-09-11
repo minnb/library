@@ -41,8 +41,11 @@
     </div>
     <div class="form-group">
         <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Quê quán</label>
-        <div class="col-sm-9">
-            <input type="text" id="form-field-1" name="que_quan" class="col-xs-10 col-sm-5" required="" value="{{ old('que_quan', isset($data) ? $data['que_quan'] : '') }}" />
+        <div class="col-xs-4">
+            <select class="chosen-select form-control" id="form-field-select-3" data-placeholder="Chọn quê quán..." name="que_quan[]" required>
+                <option value="">  </option>
+                {!! getSelectArrayForm(App\Models\Province::getSelectProvince(), old('que_quan', isset($data) ? array($data['que_quan']): [0]) ) !!}
+            </select>
         </div>
     </div>
     <div class="form-group">

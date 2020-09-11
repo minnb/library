@@ -79,19 +79,5 @@ class CategoriesSeeder extends Seeder
             'user_id' =>0,
         ]);
 
-        DB::table('s_tac_gia')->insert([
-            'ten_tac_gia' => 'Tô Hoài',
-            'ten_tac_gia_2' => 'Nguyễn Sen',
-            'gioi_tinh' => 0,
-            'alias' => Str::slug('Tố Hữu'),
-            'nam_sinh' => '1920-09-27',
-            'que_quan' => 'Thanh Oai - Hà Nội',
-            'the_loai' => '',
-            'gioi_thieu' => '',
-            'noi_dung' => '',
-            'options' => '{}',
-            'blocked' => 0,
-            'user_id' =>0,
-        ]);
     }
 }

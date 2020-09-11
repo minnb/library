@@ -1,6 +1,10 @@
 @extends('dashboard.app')
 @section('title', 'Tác giả')
 @section('page-header', "Tạo mới")
+@section('stylesheet')     
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin/css/chosen.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin/plugin/jquery.filer/css/jquery.filer.css') }}"/>
+@endsection
 @section('content')
 @include('dashboard.layouts.alert')
 <form class="form-horizontal" role="form" action="{{ route('post.dashboard.cate.book.author.create')}}" method="post" enctype="multipart/form-data">
@@ -34,11 +38,14 @@
                 </span>
             </div>
        </div>
-    </div>
+    </div> 
     <div class="form-group">
         <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Quê quán</label>
-        <div class="col-sm-9">
-            <input type="text" id="form-field-1" name="que_quan" class="col-xs-10 col-sm-5" required="" value="{{ old('que_quan')}}" />
+        <div class="col-xs-4">
+            <select class="chosen-select form-control" id="form-field-select-3" data-placeholder="Chọn quê quán..." name="que_quan[]" required>
+                <option value="">  </option>
+                {!! getSelectArrayForm(App\Models\Province::getSelectProvince(), old('que_quan', isset($data) ? $data['que_quan']: [0]) ) !!}
+            </select>
         </div>
     </div>
     <div class="form-group">
@@ -81,6 +88,7 @@
 <script src="{{asset('admin/js/bootstrap-datepicker.min.js') }}"></script>
 <script src="{{asset('admin/js/moment.min.js') }}"></script>
 <script src="{{asset('admin/js/daterangepicker.min.js') }}"></script>
+<script src="{{asset('admin/js/chosen.jquery.min.js') }}"></script>
 <script src="<?php echo asset('admin/plugin/func_ckfinder.js'); ?>"></script>
 <script src="<?php echo asset('admin/plugin/ckeditor/ckeditor.js'); ?>"></script>
 <script src="<?php echo asset('admin/plugin/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js'); ?>"></script>
@@ -113,5 +121,32 @@
         autoclose: true,
         todayHighlight: true
     })
+
+    if(!ace.vars['touch']) {
+        $('.chosen-select').chosen({allow_single_deselect:true}); 
+        //resize the chosen on window resize
+        $(window)
+        .off('resize.chosen')
+        .on('resize.chosen', function() {
+            $('.chosen-select').each(function() {
+                 var $this = $(this);
+                 $this.next().css({'width': $this.parent().width()});
+            })
+        }).trigger('resize.chosen');
+        //resize chosen on sidebar collapse/expand
+        $(document).on('settings.ace.chosen', function(e, event_name, event_val) {
+            if(event_name != 'sidebar_collapsed') return;
+            $('.chosen-select').each(function() {
+                 var $this = $(this);
+                 $this.next().css({'width': $this.parent().width()});
+            })
+        });
+        $('#chosen-multiple-style .btn').on('click', function(e){
+            var target = $(this).find('input[type=radio]');
+            var which = parseInt(target.val());
+            if(which == 2) $('#form-field-select-4').addClass('tag-input-style');
+             else $('#form-field-select-4').removeClass('tag-input-style');
+        });
+    }
 </script>
 @endsection

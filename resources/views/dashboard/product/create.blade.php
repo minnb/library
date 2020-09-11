@@ -200,10 +200,10 @@
         $('.rating').raty('destroy');
         $('.multiselect').multiselect('destroy');
     });
-     if(!ace.vars['touch']) {
+    
+    if(!ace.vars['touch']) {
         $('.chosen-select').chosen({allow_single_deselect:true}); 
         //resize the chosen on window resize
-
         $(window)
         .off('resize.chosen')
         .on('resize.chosen', function() {
@@ -220,8 +220,6 @@
                  $this.next().css({'width': $this.parent().width()});
             })
         });
-
-
         $('#chosen-multiple-style .btn').on('click', function(e){
             var target = $(this).find('input[type=radio]');
             var which = parseInt(target.val());
@@ -229,6 +227,7 @@
              else $('#form-field-select-4').removeClass('tag-input-style');
         });
     }
+
     $('#spinner1').ace_spinner({value:0,min:0,max:200,step:10, btn_up_class:'btn-info' , btn_down_class:'btn-info'})
     .closest('.ace-spinner')
     .on('changed.fu.spinbox', function(){

@@ -49,7 +49,7 @@
                             @endif
                         </td>
                         <td>{{ date($item->nam_sinh) }}</td>
-                        <td>{{ $item->que_quan }}</td>
+                        <td>{{ App\Models\Province::find($item->que_quan)->name }}</td>
                         <td>{{ date($item->created_at) }}</td>
                         <td>{{ $item->blocked }}</td>
 

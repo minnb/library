@@ -7,6 +7,7 @@ use Log; use DB;
 use Auth;use Image;
 use App\Models\Author;
 use App\Models\Product;
+use App\Models\Province;
 
 class BookController extends Controller
 {
@@ -39,7 +40,7 @@ class BookController extends Controller
                 $data->noi_dung = empty($request->content)?"":$request->content;;
                 $data->nam_sinh = date($request->nam_sinh);
                 $data->the_loai = "";
-                $data->que_quan = $request->que_quan;
+                $data->que_quan = $request->que_quan[0];
                 $data->gioi_tinh = $request->gioi_tinh == 'on' ? 0 : 1;
                 $data->blocked = $request->status == 'on' ? 0 : 1;
                 $data->user_id = Auth::user()->id;
@@ -77,7 +78,7 @@ class BookController extends Controller
                 $data->ten_tac_gia = trim($request->name);
                 $data->alias = Str::slug($request->name);
                 $data->nam_sinh = date($request->nam_sinh);
-                $data->que_quan = $request->que_quan;
+                $data->que_quan = $request->que_quan[0];
                 $data->ten_tac_gia_2 = trim($request->name2);
                 $data->gioi_tinh = $request->gioi_tinh == 'on' ? 0 : 1;
                 $data->blocked = $request->status == 'on' ? 0 : 1;
