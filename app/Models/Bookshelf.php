@@ -11,7 +11,7 @@ class Bookshelf extends Model
     {
     	$code = "";
     	$data = Bookshelf::orderBy('so_ke', 'DESC')->first();
-    	if($data->count() > 0){
+    	if(isset($data) && $data->count() > 0){
     		$max = (int)substr($data->so_ke, 2, 5) + 1;
     		$stt = str_pad(strval($max),3,"0",STR_PAD_LEFT);
     		$code = 'KS'.$stt;
